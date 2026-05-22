@@ -1,0 +1,468 @@
+﻿<Window x:Class="CoffeeShopCustomer.MainWindow"
+        x:Name="OrderingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoffeeShopCustomer"
+        Icon="/CoffeeCup.png"
+        Title="CaffeiClick (Customer)" Height="675" Width="1250" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <!-- Reference the RoundedButton files here -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RoundedButton.xaml"/>
+                <ResourceDictionary Source="/RoundedTextbox.xaml"/>
+                <ResourceDictionary Source="/RoundedPasswordBox.xaml"/>
+                <ResourceDictionary Source="/RoundedButtonwithImageH.xaml"/>
+                <ResourceDictionary Source="/RoundedButtonwithImageV.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="2,0,-2,0">
+        <Grid.Background>
+            <ImageBrush x:Name="WindowBackground" Stretch="Fill"/>
+        </Grid.Background>
+        <Canvas x:Name="OrderModePage" Margin="325,10,10,8" Visibility="Collapsed">
+            <Button x:Name="DineInButton" BorderThickness="2" Content="Dine In" FontSize="16" Canvas.Left="98" Canvas.Top="201" Background="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="136" Style="{StaticResource RoundButtonImageVStyle}" local:ElementHelper.CornerRadius="20" Tag="/DineIn.png" Click="DineInButton_Click"/>
+            <Button x:Name="TakeOutButton" BorderThickness="2" Content="Take Out" FontSize="16" Canvas.Left="370" Canvas.Top="201" Background="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="136" Style="{StaticResource RoundButtonImageVStyle}" local:ElementHelper.CornerRadius="20" Tag="/TakeOut.png" Click="TakeOutButton_Click"/>
+            <Button x:Name="AdminButton" BorderThickness="1" Background="Transparent" Style="{StaticResource RoundButtonStyle}" RenderTransformOrigin="0.5,0.5" Height="46" Canvas.Left="844" Width="51" Canvas.Top="10" local:ElementHelper.CornerRadius="15" HorizontalAlignment="Left" VerticalAlignment="Center" Click="AdminButton_Click">
+                <Image Source="/Gear.png" Margin="8,8,8,8"/>
+            </Button>
+        </Canvas>
+        <Canvas x:Name="OrderingInterface" Margin="0,0,10,0" Visibility="Collapsed">
+            <Border BorderBrush="Black" BorderThickness="1" Height="100" Width="202" Canvas.Top="6" CornerRadius="10" HorizontalAlignment="Left" Canvas.Left="-9" VerticalAlignment="Center">
+                <Image x:Name="CompanyLogo" Source="/restaurant.png" Height="63" Width="63" />
+            </Border>
+            <Border HorizontalAlignment="Center" Canvas.Top="121" VerticalAlignment="Top" BorderThickness="1" CornerRadius="10" BorderBrush="Black" Canvas.Left="-9">
+                <Button BorderThickness="0" x:Name="HomeMenu" Background="Transparent" FontSize="14" Width="200" Height="60" Canvas.Left="-9" Canvas.Top="138" HorizontalAlignment="Left" VerticalAlignment="Center" Click="HomeMenu_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="0.20" BorderBrush="Transparent"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="CornflowerBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="DarkBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="False">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="DodgerBlue"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Orientation="Horizontal" Width="150" Height="60">
+                        <Image Source="/CoffeeCup.png" Width="50" Height="50"/>
+                        <TextBlock Margin="20,0,0,0" Text="Home" TextWrapping="Wrap" Width="60" FontFamily="Cascadia Mono" FontSize="13" VerticalAlignment="Center" TextAlignment="Left"/>
+                    </StackPanel>
+                </Button>
+            </Border>
+            <Border BorderBrush="Black" Height="350" Width="202" Canvas.Left="-9" Canvas.Top="196" BorderThickness="1" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                    <StackPanel x:Name="MenusPanel" />
+                </ScrollViewer>
+            </Border>
+            <TextBlock x:Name="DisplayMenuName" Canvas.Left="247" Margin="0,0,0,10" TextWrapping="Wrap" FontSize="40" Text="Home" HorizontalAlignment="Center" Height="64" VerticalAlignment="Center" Width="760" Canvas.Top="40"/>
+            <ScrollViewer Height="425" Width="985" Canvas.Left="247" Canvas.Top="121" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                <WrapPanel x:Name="ProductsPanel" Orientation="Horizontal" Width="977" />
+            </ScrollViewer>
+            <Button x:Name="ViewCartButton" Content="View Cart" FontSize="16" Height="34" Canvas.Left="682" Canvas.Top="576" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="88" Click="ViewCartButton_Click"/>
+            <Button x:Name="StartOverButton" Content="Start Over" FontSize="16" Height="34" Canvas.Left="559" Canvas.Top="576" Background="White" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundButtonStyle}" Width="88" Click="StartOverButton_Click"/>
+        </Canvas>
+        <Canvas x:Name="ProductCustInterface" Visibility="Collapsed" Margin="26,0,26,10">
+            <ScrollViewer x:Name="ProductCustScroll" HorizontalScrollBarVisibility="Hidden" Height="570" Width="1205" VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Width="1205">
+                    <StackPanel Height="150" Orientation="Horizontal">
+                        <Border BorderBrush="Transparent" BorderThickness="1" Width="150" Margin="0,0,30,0">
+                            <Image x:Name="ProductImage" Source="/CoffeeCup.png"/>
+                        </Border>
+                        <StackPanel Width="900" Orientation="Vertical">
+                            <TextBlock Text="Please choose your options for" FontSize="14" Margin="0,10,0,10"/>
+                            <TextBlock x:Name="ProductName" Text="Iced Milk Matcha Cappucino" FontSize="40"/>
+                        </StackPanel>
+                        <StackPanel Width="82" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Height="20" Margin="0,0,0,10">
+                                    <TextBlock Text="₱" Margin="0,0,3,0" FontSize="17"/>
+                                    <TextBlock x:Name="SelectedProductPrice" Width="70" Text="10030.00" FontSize="17"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Height="26" Width="80">
+                                    <Button x:Name="MinusButton" Content="-" FontFamily="Cascadia Mono" FontSize="14" Height="20" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Click="MinusButton_Click"/>
+                                    <TextBlock x:Name="SelectedProductQuantity" Text="1" TextAlignment="Center" Height="19" Width="20" FontSize="15"/>
+                                    <Button x:Name="AddButton" Content="+" FontFamily="Cascadia Mono" FontSize="14" Height="20" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,0,0,0" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Click="AddButton_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="ProductSize" Margin="0,20,0,0" Height="310" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="SizeStep" Text="1" Margin="0,0,10,0" FontSize="16" Width="8"/>
+                        <TextBlock x:Name="PriceScale" Text="0" Width="0" Height="0"/>
+                        <TextBlock x:Name="BasePrice" Text="0" Width="0" Height="0"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                                <TextBlock Text="Product Size" FontSize="16"/>
+                                <TextBlock Margin="5,0,0,0" Text="(Required)" FontSize="16"/>
+                            </StackPanel>
+                            <ScrollViewer Height="280" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="SmallBorder" Width="200" Height="270" Background="Transparent" BorderThickness="0" Click="SmallProduct_Click" BorderBrush="Black">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid>
+                                                    <Border x:Name="buttonborder1" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1.1" BorderBrush="{TemplateBinding BorderBrush}"/>
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="buttonborder1" Property="BorderBrush" Value="CornflowerBlue"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="buttonborder1" Property="BorderBrush" Value="DarkBlue"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel>
+                                            <Border>
+                                                <Image Source="/small.png" Height="190" Width="190" Margin="5,5,5,5"/>
+                                            </Border>
+                                            <TextBlock Text="Small" FontSize="16" Margin="0,10,0,0" TextAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="MediumBorder" Width="200" Height="270" Background="Transparent" BorderThickness="0" Margin="30,0,0,0" Click="MediumProduct_Click" BorderBrush="Black">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid>
+                                                    <Border x:Name="buttonborder1" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1.1" BorderBrush="{TemplateBinding BorderBrush}"/>
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="buttonborder1" Property="BorderBrush" Value="CornflowerBlue"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="buttonborder1" Property="BorderBrush" Value="DarkBlue"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel>
+                                            <Border>
+                                                <Image Source="/medium.png" Height="190" Width="190" Margin="5,5,5,5"/>
+                                            </Border>
+                                            <TextBlock Text="Medium" FontSize="16" Margin="0,10,0,0" TextAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="LargeBorder" Background="Transparent" BorderThickness="0" Click="LargeProduct_Click" Width="200" Height="270" Margin="30,0,0,0" BorderBrush="Black">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid>
+                                                    <Border x:Name="buttonborder1" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1.1" BorderBrush="{TemplateBinding BorderBrush}"/>
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="buttonborder1" Property="BorderBrush" Value="CornflowerBlue"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="buttonborder1" Property="BorderBrush" Value="DarkBlue"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <StackPanel>
+                                            <Border>
+                                                <Image Source="/large.png" Height="190" Width="190" Margin="5,5,5,5"/>
+                                            </Border>
+                                            <TextBlock Text="Large" FontSize="16" Margin="0,10,0,0" TextAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="TempMode" Margin="0,20,0,0" Orientation="Horizontal" Visibility="Collapsed">
+                        <TextBlock x:Name="TempStep" Text="2" Height="23" FontSize="16" Margin="0,0,10,0"/>
+                        <TextBlock Text="Temperature" FontSize="16" Height="23" Margin="0,0,20,0"/>
+                        <Button x:Name="HotProduct" Content="Hot" FontSize="16" Height="26" Width="45" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="HotProduct_Click"/>
+                        <Button x:Name="ColdProduct" Content="Cold" FontSize="16" Height="26" Width="55" Margin="12,0,0,0" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="ColdProduct_Click"/>
+                    </StackPanel>
+                    <StackPanel x:Name="IceLevel" Margin="0,20,0,0" Orientation="Horizontal" Visibility="Collapsed">
+                        <TextBlock x:Name="IceStep" Text="3" Height="23" FontSize="16" Margin="0,0,10,0"/>
+                        <TextBlock Text="Ice level" FontSize="16" Height="23" Margin="0,0,20,0"/>
+                        <Button x:Name="ColdNoIce" Content="Cold, no ice" FontSize="16" Height="26" Width="100" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="ColdNoIce_Click"/>
+                        <Button x:Name="LessIce" Content="Less ice" FontSize="16" Height="26" Width="70" Margin="15,0,0,0" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="LessIce_Click"/>
+                        <Button x:Name="RegIce" Content="Regular ice" FontSize="16" Height="26" Width="95" Margin="15,0,0,0" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="RegIce_Click"/>
+                        <Button x:Name="MoreIce" Content="More ice" FontSize="16" Height="26" Width="80" Margin="15,0,0,0" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="MoreIce_Click"/>
+                        <Button x:Name="FullIce" Content="Full ice" FontSize="16" Height="26" Width="70" Margin="15,0,0,0" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="FullIce_Click"/>
+                    </StackPanel>
+                    <StackPanel x:Name="EspressoShot" Height="22" Margin="0,20,0,0" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="EspressoStep" Text="4" FontSize="16" Margin="0,0,10,0"/>
+                        <TextBlock Text="Espresso shot" FontSize="16" Margin="0,0,20,0"/>
+                        <Button x:Name="RemoveEspresso" Content="-" FontSize="16" Width="22" Margin="0,0,12,0" FontFamily="Cascadia Mono" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="RemoveEspresso_Click"/>
+                        <TextBlock x:Name="EspressoQuantity" Text="0" Width="20" TextAlignment="Center" FontSize="16"/>
+                        <TextBlock x:Name="ShotSlash" Text="/" Width="10" TextAlignment="Center" FontSize="16"/>
+                        <TextBlock x:Name="MaxShotQuantity" Text="0" Width="20" TextAlignment="Center" FontSize="16"/>
+						<TextBlock x:Name="DefaultMaxShot" Text="0" Height="0" Width="0" FontSize="16"/>
+                        <Button x:Name="AddEspresso" Content="+" FontSize="16" Width="22" Margin="12,0,0,0" FontFamily="Cascadia Mono"  Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="AddEspresso_Click"/>
+                        <TextBlock Text="+₱" Width="20" TextAlignment="Center" FontSize="16" Margin="15,0,0,0"/>
+                        <TextBlock x:Name="ShotPrice" Text="0" Width="100" TextAlignment="Left" FontSize="16"/>
+                        <TextBlock x:Name="HiddenShotPrice" Text="40.00" Width="0" Height="0" TextAlignment="Left" FontSize="16"/>
+                        <TextBlock x:Name="ShotScale" Text="0" Width="0" Height="0" TextAlignment="Left" FontSize="16"/>
+                        <TextBlock x:Name="DefaultEspresso" Text="0" Width="0" Height="0" TextAlignment="Left" FontSize="16"/>
+                    </StackPanel>
+                    <StackPanel x:Name="ServeWarm" Margin="0,20,0,0" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="WarmStep" Text="5" Height="23" FontSize="16" Margin="0,0,10,0"/>
+                        <TextBlock Text="Reheat product" FontSize="16" Height="23" Margin="0,0,20,0"/>
+                        <Button x:Name="AllowReheat" Content="Yes" FontSize="16" Height="26" Width="45" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="AllowReheat_Click"/>
+                        <Button x:Name="NoReheat" Content="No" FontSize="16" Height="26" Width="40" Margin="15,0,0,0" Style="{StaticResource RoundButtonStyle}" Background="Transparent" Click="NoReheat_Click"/>
+                    </StackPanel>
+                    <StackPanel x:Name="ProductBase" Margin="0,20,0,0" Height="370" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="BaseStep" Text="6" Margin="0,0,10,0" FontSize="16" Width="10"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
+                                <TextBlock Text="Base" FontSize="16"/>
+                                <TextBlock x:Name="MinBase" Margin="10,0,0,0" Text="0" FontSize="16"/>
+                                <TextBlock x:Name="BaseSlash" Text="/" FontSize="16"/>
+                                <TextBlock x:Name="MaxBase" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="BaseRequiredText" Margin="10,0,0,0" Text="(Required)" FontSize="16"/>
+                                <TextBlock x:Name="BaseRequired" Width="0" Height="0"/>
+                            </StackPanel>
+                            <ScrollViewer x:Name="BaseScroll" Height="330" Width="1147" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                <StackPanel x:Name="BaseOptions" Orientation="Horizontal"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="ProductMilk" Margin="0,20,0,0" Height="370" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="MilkStep" Text="7" Margin="0,0,10,0" FontSize="16" Width="10"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
+                                <TextBlock Text="Milk" FontSize="16"/>
+                                <TextBlock x:Name="MinMilk" Margin="10,0,0,0" Text="0" FontSize="16"/>
+                                <TextBlock x:Name="MilkSlash" Text="/" FontSize="16"/>
+                                <TextBlock x:Name="MaxMilk" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="DefaultMaxMilk" Width="0" Height="0" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="MilkRequiredText" Margin="10,0,0,0" Text="(Required)" FontSize="16"/>
+                                <TextBlock x:Name="MilkScale" Text="0" Width="0" Height="0"/>
+                                <TextBlock x:Name="MilkRequired" Width="0" Height="0"/>
+                            </StackPanel>
+                            <ScrollViewer x:Name="MilkScroll" Height="330" Width="1147" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                <StackPanel x:Name="MilkOptions" Orientation="Horizontal"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="ProductSweetener" Margin="0,20,0,0" Height="370" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="SweetStep" Text="8" Margin="0,0,10,0" FontSize="16" Width="10"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
+                                <TextBlock Text="Sweetener" FontSize="16"/>
+                                <TextBlock x:Name="MinSweet" Margin="10,0,0,0" Text="0" FontSize="16"/>
+                                <TextBlock x:Name="SweetSlash" Text="/" FontSize="16"/>
+                                <TextBlock x:Name="MaxSweet" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="DefaultMaxSweet" Width="0" Height="0" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="SweetRequiredText" Margin="10,0,0,0" Text="(Required)" FontSize="16"/>
+                                <TextBlock x:Name="SweetScale" Text="0" Width="0" Height="0"/>
+                                <TextBlock x:Name="SweetRequired" Width="0" Height="0"/>
+                            </StackPanel>
+                            <ScrollViewer x:Name="SweetScroll" Height="330" Width="1147" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                <StackPanel x:Name="SweetOptions" Orientation="Horizontal"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="ProductSyrup" Margin="0,20,0,0" Height="370" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="SyrupStep" Text="9" Margin="0,0,10,0" FontSize="16" Width="10"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                                <TextBlock Text="Syrup" FontSize="16"/>
+                                <TextBlock x:Name="MinSyrup" Margin="10,0,0,0" Text="0" FontSize="16"/>
+                                <TextBlock x:Name="SyrupSlash" Text="/" FontSize="16"/>
+                                <TextBlock x:Name="MaxSyrup" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="DefaultMaxSyrup" Width="0" Height="0" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="SyrupRequiredText" Margin="10,0,0,0" Text="(Required)" FontSize="16"/>
+                                <TextBlock x:Name="SyrupScale" Text="0" Width="0" Height="0"/>
+                                <TextBlock x:Name="SyrupRequired" Width="0" Height="0"/>
+                            </StackPanel>
+                            <ScrollViewer x:Name="SyrupScroll" Height="330" Width="1147" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                <StackPanel x:Name="SyrupOptions" Orientation="Horizontal"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="ProductAddon" Margin="0,20,0,0" Height="370" Orientation="Horizontal" Visibility="Visible">
+                        <TextBlock x:Name="AddonStep" Text="10" Margin="0,0,10,0" FontSize="16" Width="10"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
+                                <TextBlock Text="Add-ons" FontSize="16"/>
+                                <TextBlock x:Name="MinAddon" Margin="10,0,0,0" Text="0" FontSize="16"/>
+                                <TextBlock x:Name="AddonSlash" Text="/" FontSize="16"/>
+                                <TextBlock x:Name="MaxAddon" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="DefaultMaxAddon" Width="0" Height="0" Text="1" FontSize="16"/>
+                                <TextBlock x:Name="AddonRequiredText" Margin="10,0,0,0" Text="(Required)" FontSize="16"/>
+                                <TextBlock x:Name="AddonScale" Text="0" Width="0" Height="0"/>
+                                <TextBlock x:Name="AddonRequired" Width="0" Height="0"/>
+                            </StackPanel>
+                            <ScrollViewer x:Name="AddonScroll" Height="330" Width="1147" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                <StackPanel x:Name="AddonOptions" Orientation="Horizontal"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+            <Button x:Name="AddProductToCart" Content="Add Product to Cart" FontSize="16" Height="28" Width="160" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Canvas.Left="407" Canvas.Top="585" HorizontalAlignment="Left" VerticalAlignment="Center" Click="AddProductToCart_Click"/>
+            <Button x:Name="CloseCustButton" Content="Return to Menu" FontSize="16" Height="28" Width="130" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Canvas.Left="645" Canvas.Top="585" HorizontalAlignment="Left" VerticalAlignment="Center" Click="CloseCustButton_Click"/>
+        </Canvas>
+        <Canvas x:Name="LowerCartInterface" Visibility="Collapsed" Height="91" Width="232" Canvas.Left="280" Canvas.Top="558" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="327,551,0,0">
+            <TextBlock Canvas.Left="112" TextWrapping="Wrap" FontSize="16" Text="PHP" Canvas.Top="33" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock x:Name="CartPrice" Canvas.Left="144" TextWrapping="Wrap" FontSize="16" Text="0" Canvas.Top="33" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Panel.ZIndex="1" x:Name="CartQuantity" Width="19" TextAlignment="Center" FontSize="16" Foreground="White" Canvas.Left="57" TextWrapping="Wrap" Text="0" FontFamily="Cascadia Mono" Canvas.Top="13" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image Panel.ZIndex="-1" Source="/Cart.png" Height="60" Canvas.Left="10" Canvas.Top="16" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image Panel.ZIndex="0" Source="/Circle.png" Canvas.Left="49" Canvas.Top="5" Height="35" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Canvas>
+        <Canvas x:Name="ProductCartPanel" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Canvas.Left="304" VerticalAlignment="Center">
+                <Border BorderBrush="Black" BorderThickness="0" Height="125" Width="125" Margin="20,0,0,0">
+                    <Image x:Name="CartLogo" Source="/CoffeeCup.png"/>
+                </Border>
+                <TextBlock TextWrapping="Wrap" Text="Order Summary" TextAlignment="Center" Height="50" Width="250" FontSize="35" Margin="45,0,0,0"/>
+                <TextBlock Text="-" Height="50" FontSize="35" Margin="10,0,10,0"/>
+                <TextBlock x:Name="CurrentOrderMethod" Text="Dine-in" FontSize="35" Height="50"/>
+            </StackPanel>
+            <ScrollViewer x:Name="FoodCartScroll" Height="400" VerticalScrollBarVisibility="Auto" Width="755" Canvas.Left="255" Canvas.Top="146" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <WrapPanel x:Name="FoodCartContent" Orientation="Vertical"/>
+            </ScrollViewer>
+            <StackPanel Height="56" Orientation="Horizontal" Width="294" Canvas.Left="591" Canvas.Top="566" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button x:Name="ReturnToMenuButton" Content="Return to Menu" Background="White" Height="34" FontSize="16" Style="{StaticResource RoundButtonStyle}" Width="125" Margin="0,0,35,0" Click="ReturnToMenuButton_Click"/>
+                <Button x:Name="ConfirmOrderButton" Content="Confirm Order" Background="White" Height="34" FontSize="16" Style="{StaticResource RoundButtonStyle}" Width="125" Margin="0,0,37,0" Click="ConfirmOrderButton_Click"/>
+            </StackPanel>
+        </Canvas>
+        <Canvas x:Name="ClaimModePanel" Margin="352,60,344,34" Visibility="Collapsed">
+            <TextBlock Canvas.Left="93" TextWrapping="Wrap" Text="How do you want to claim your order?" Canvas.Top="81" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button x:Name="ServedAtTableButton" Width="180" Height="180" Background="White" Canvas.Left="56" BorderBrush="Transparent" Canvas.Top="134" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ServedAtTableButton_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="border3" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="Black"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border3" Property="BorderBrush" Value="CornflowerBlue"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border3" Property="BorderBrush" Value="DarkBlue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Vertical">
+                    <Image Width="90" Height="90" Margin="7" Source="/Table.png"/>
+                    <TextBlock Text="Served at your table" Width="100" TextAlignment="Center" TextWrapping="Wrap" FontSize="18"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ServedAtCounterButton" Width="180" Height="180"  Background="White" Canvas.Left="321" Canvas.Top="134" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ServedAtCounterButton_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="border4" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="Black"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border4" Property="BorderBrush" Value="CornflowerBlue"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border4" Property="BorderBrush" Value="DarkBlue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+                <StackPanel Orientation="Vertical">
+                    <Image Width="90" Height="90" Margin="7" Source="/Counter.png"/>
+                    <TextBlock Text="Served at the counter" Width="100" TextAlignment="Center" TextWrapping="Wrap" FontSize="18"/>
+                </StackPanel>
+            </Button>
+            <TextBox x:Name="CustomerTableNumber" Canvas.Left="165" TextWrapping="Wrap" TextAlignment="Center" Canvas.Top="332" Width="60" FontSize="15" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="65" TextWrapping="Wrap" Text="Table number:" FontSize="15" Canvas.Top="338" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button x:Name="CancelCustomerOrder" Content="Cancel Order" Canvas.Left="220" Height="34" Width="110" FontSize="16" Canvas.Top="519" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CancelCustomerOrder_Click"/>
+        </Canvas>
+        <Canvas x:Name="OrderEndingPage" Height="641" Width="915" Margin="183,-9,152,27" Visibility="Collapsed">
+            <TextBlock Canvas.Left="243" TextWrapping="Wrap" Text="Thank you for your order!" Canvas.Top="14" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Canvas.Left="189" TextWrapping="Wrap" Text="We hope you enjoy our product!" Canvas.Top="425" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button x:Name="ReorderButton" Content="Click here to order again" Height="60" Width="370" Canvas.Left="253" Canvas.Top="496" FontSize="30" Background="Transparent" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ReorderButton_Click"/>
+            <TextBlock Canvas.Left="72" TextWrapping="Wrap" Text="Please proceed to the counter to complete your payment" Canvas.Top="577" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30"/>
+            <Image Height="331" Canvas.Left="271" Canvas.Top="79" Width="359" Source="/bill.png" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock Canvas.Left="356" TextWrapping="Wrap" Text="Order Number" FontSize="25" Canvas.Top="165" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock x:Name="CustOrderNumber" Canvas.Left="392" TextWrapping="Wrap" TextAlignment="Center" Width="90" Text="00001" Canvas.Top="224" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock x:Name="CustOrderMode" Canvas.Left="385" TextWrapping="Wrap" TextAlignment="Center" Width="100" Text="Take-out" Canvas.Top="287" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Canvas>
+        <Canvas x:Name="CustomerModeLandingPage" Visibility="Visible" Width="1200">
+            <Button x:Name="StartOrderButton" Content="Start Order" Canvas.Left="540" FontSize="20" Canvas.Top="580" Background="White" Style="{StaticResource RoundButtonStyle}" Height="40" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Click="StartOrderButton_Click"/>
+            <TextBlock x:Name="BlankMediaMessage" Canvas.Left="530" TextWrapping="Wrap" FontSize="18" Text="No media selected" Canvas.Top="304" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Border BorderBrush="Black" BorderThickness="0" Height="560" Width="1200" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image x:Name="PromotionImage"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="0" Height="560" Width="1200" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <MediaElement x:Name="PromotionVideo" MediaEnded="PromotionVideo_MediaEnded" LoadedBehavior="Manual"/>
+            </Border>
+        </Canvas>
+        <Canvas x:Name="ProductVariantsPanel" Height="645" Visibility="Collapsed" Margin="122,-10,122,16">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Visibility="Visible" Height="425" Width="985" Canvas.Left="27" Canvas.Top="156" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <WrapPanel x:Name="ProductVariants" Orientation="Horizontal" Width="977"/>
+            </ScrollViewer>
+            <Border BorderBrush="Black" BorderThickness="1" Height="125" Width="125" Canvas.Left="32" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image x:Name="ProductIcon" />
+            </Border>
+            <TextBlock Canvas.Left="178" TextWrapping="Wrap" Text="Please choose your preferred variant of" FontSize="15" Canvas.Top="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock x:Name="MainProductName" Canvas.Left="177" TextWrapping="Wrap" Text="Meal Name Appears Here" FontSize="30" Canvas.Top="41" HorizontalAlignment="Left" VerticalAlignment="Center" Width="506"/>
+            <Button x:Name="CloseVariantButton" Content="Cancel Item" FontSize="20" Canvas.Left="426" Height="35" Width="120" Canvas.Top="592" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CloseVariantButton_Click"/>
+        </Canvas>
+        <Canvas x:Name="LoginAdmin" Margin="470,173,465,248" Visibility="Collapsed">
+            <TextBox FontSize="16" x:Name="AdminUsername" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Style="{StaticResource RoundTextBoxStyle}" Canvas.Left="150" Canvas.Top="72"/>
+            <TextBox FontSize="16" x:Name="ShownAdminPassword" Visibility="Collapsed" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Style="{StaticResource RoundTextBoxStyle}" Canvas.Left="150" Canvas.Top="110" Height="23"/>
+            <PasswordBox FontSize="16" x:Name="HiddenAdminPassword" HorizontalAlignment="Center" VerticalAlignment="Top" Width="155" Style="{StaticResource RoundPassBoxStyle}" Canvas.Left="150" Canvas.Top="110"/>
+            <TextBlock FontSize="16" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Enter admin credentials to continue" VerticalAlignment="Center" Canvas.Left="37" Canvas.Top="33"/>
+            <TextBlock FontSize="16" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Admin username" VerticalAlignment="Center" Canvas.Left="16" Canvas.Top="73"/>
+            <TextBlock FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Admin password" VerticalAlignment="Top" Canvas.Left="18" Canvas.Top="111"/>
+            <Button FontSize="16" x:Name="LoginAdminButton" Content="Login account" Height="35" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Canvas.Left="15" Canvas.Top="184" Width="120" Click="LoginAdminButton_Click"/>
+            <Button FontSize="16" x:Name="CloseLoginButton" Content="Close login screen" Height="35" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Canvas.Left="150" Canvas.Top="184" Width="152" Click="CloseLoginButton_Click"/>
+            <CheckBox  FontSize="13" x:Name="ShowAdminPassword" Content="Show password" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="161" Canvas.Top="148" Click="ShowAdminPassword_Click">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+        </Canvas>
+        <Canvas x:Name="AdminDashboard" Margin="3,4,7,11" Visibility="Collapsed">
+            <Button x:Name="ShowAdminPanel" Width="30" Height="30"  Panel.ZIndex="3" Margin="5,1,0,0" Background="Transparent" BorderBrush="Transparent" Click="ShowAdminPanel_Click">
+                <Image Source="/menuicon.png"/>
+            </Button>
+            <StackPanel x:Name="AdminFunctions" Height="120" Width="110" Panel.ZIndex="3" Canvas.Top="58" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-6" Background="Transparent" Visibility="Visible">
+                <Button x:Name="LogoutButton" Background="White" Height="110" Click="LogoutButton_Click">
+                    <StackPanel Orientation="Vertical" Width="70">
+                        <Image Width="40" Height="40" Margin="0,4,0,6" Source="/Logout.png"/>
+                        <TextBlock Text="Log out" Width="59" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,3"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <TextBlock Canvas.Left="364" TextWrapping="Wrap" Text="The available administrator settings for the system are available here" Canvas.Top="18" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Canvas.Left="422" TextWrapping="Wrap" Text="Folder to save customer orders" Canvas.Top="67" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Canvas.Left="364" TextWrapping="Wrap" Text="Promotional file location (image/video)" Canvas.Top="163" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="Background image" Canvas.Left="668" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="262"/>
+            <TextBox x:Name="PromotionFileLocation" Canvas.Left="654" TextWrapping="NoWrap" Text="" Canvas.Top="164" Width="218" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundTextBoxStyle}" BorderBrush="Gray"/>
+            <TextBox x:Name="OrderFolderLocation" Canvas.Left="654" TextWrapping="NoWrap" Text="" Canvas.Top="67" Width="218" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundTextBoxStyle}" BorderBrush="Gray"/>
+            <Border BorderBrush="Black" BorderThickness="1" Height="180" Width="180" Canvas.Left="644" Canvas.Top="293" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image x:Name="BackgroundImage"/>
+            </Border>
+            <Button x:Name="LoadBackground" Content="Load image" Canvas.Left="500" Canvas.Top="316" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="126" Click="LoadBackground_Click" ToolTip="Crop the product image to a square and use at least 64×64 resolution for best results" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button x:Name="RemoveBackground" Content="Remove image" Canvas.Left="500" Canvas.Top="369" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="126" Click="RemoveBackground_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button x:Name="ApplyBackgroundImage" Content="Apply image" Canvas.Left="500" FontSize="16" Canvas.Top="420" Background="White" Style="{StaticResource RoundButtonStyle}" Height="35" Width="126" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ApplyBackgroundImage_Click"/>
+            <Button x:Name="ChangePromotionButton" Content="Change location" Width="140" Height="35" FontSize="16" Canvas.Left="500" Canvas.Top="199" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ChangePromotionButton_Click"/>
+            <Button x:Name="SavePromotionButton" Content="Save location" Width="120" Height="35" FontSize="16" Canvas.Left="654" Canvas.Top="199" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SavePromotionButton_Click"/>
+            <Button x:Name="ChangeFolderButton" Content="Change location" Width="140" Height="35" FontSize="16" Canvas.Left="500" Canvas.Top="102" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ChangeFolderButton_Click"/>
+            <Button x:Name="SaveFolderButton" Content="Save location" Width="120" Height="35" FontSize="16" Canvas.Left="654" Canvas.Top="102" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SaveFolderButton_Click"/>
+            <Button x:Name="PreviewImagesButton" Content="View uploaded image" Canvas.Left="644" Canvas.Top="486" FontSize="16" Background="White" Style="{StaticResource RoundButtonStyle}" Height="35" Width="180" Click="PreviewImagesButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Canvas>
+    </Grid>
+</Window>
