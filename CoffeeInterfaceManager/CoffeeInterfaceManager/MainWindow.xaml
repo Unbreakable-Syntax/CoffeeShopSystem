@@ -1,0 +1,694 @@
+﻿<Window x:Class="CoffeeCatalogManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoffeeCatalogManager" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+        mc:Ignorable="d"
+        Title="CaffeiClick Catalog Manager" Height="690" Width="1280" WindowStartupLocation="CenterScreen" Icon="/CoffeeCup.png" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <!-- Reference the RoundedButton files here -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RoundedButton.xaml"/>
+                <ResourceDictionary Source="/RoundedTextbox.xaml"/>
+                <ResourceDictionary Source="/RoundedPasswordBox.xaml"/>
+                <ResourceDictionary Source="/RoundedButtonwithImageH.xaml"/>
+                <ResourceDictionary Source="/RoundedButtonwithImageV.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="#FFFFFF" Margin="0,0,0,-42">
+        <Canvas x:Name="AdminLogin" Margin="478,208,479,295" Visibility="Visible">
+            <TextBox x:Name="AdminUsername" Canvas.Left="159" TextWrapping="NoWrap" Text="" Canvas.Top="58" Width="140" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="ShownAdminPassword" Canvas.Left="159" Visibility="Collapsed" TextWrapping="NoWrap" Text="" Canvas.Top="93" Width="140" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <PasswordBox x:Name="HiddenAdminPassword" Canvas.Left="159" Canvas.Top="93" Width="140" FontSize="16" Style="{StaticResource RoundPassBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button x:Name="LoginAdminButton" Background="Transparent" Content="Login admin" Height="28" Width="118" Canvas.Left="26" Canvas.Top="159" FontSize="16" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="LoginAdminButton_Click"/>
+            <Button x:Name="ClearAdminInputs" Background="Transparent" Content="Clear all fields" Height="28" Width="140" Canvas.Left="159" Canvas.Top="159" FontSize="16" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ClearAdminInputs_Click"/>
+            <TextBlock Canvas.Left="25" TextWrapping="Wrap" Text="Admin username" Canvas.Top="59" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="27" TextWrapping="Wrap" Text="Admin password" Canvas.Top="94" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="23" TextWrapping="Wrap" Text="Enter the admin credentials to continue" Canvas.Top="18" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <CheckBox x:Name="ShowAdminPassword" FontSize="13" Content="Show password" Canvas.Left="168" Canvas.Top="127" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowAdminPassword_Click">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+        </Canvas>
+        <Canvas x:Name="CatalogDashboard" Margin="3,4,7,11" Visibility="Collapsed">
+            <Button x:Name="ShowAdminPanel" Width="30" Height="30" Panel.ZIndex="3" Margin="5,1,0,0" Background="Transparent" BorderBrush="Transparent" Click="ShowAdminPanel_Click">
+                <Image Source="/menuicon.png"/>
+            </Button>
+            <ScrollViewer x:Name="AdminFunctions" VerticalScrollBarVisibility="Hidden" Height="550" Width="110" Panel.ZIndex="3" Canvas.Top="40" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4" Background="Transparent">
+                <StackPanel>
+                    <Button x:Name="ManageProductsButton" Background="White" Height="110" Click="ManageProductsButton_Click">
+                        <StackPanel Orientation="Vertical" Width="70">
+                            <Image Width="40" Height="40" Margin="0,2,0,3" Source="/Product.png"/>
+                            <TextBlock Text="Manage Products" Width="65" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ManageMenusButton" Background="White" Height="110" Click="ManageMenusButton_Click">
+                        <StackPanel Orientation="Vertical" Width="70">
+                            <Image Width="40" Height="40" Margin="0,3,0,5" Source="/Menu.png"/>
+                            <TextBlock Text="Manage Menus" Width="59" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,2"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ManageMenuContentsButton" Background="White" Height="110" Click="ManageMenuContentsButton_Click">
+                        <StackPanel Orientation="Vertical" Width="70">
+                            <Image Width="40" Height="40" Margin="0,4,0,6" Source="/MenuContent.png"/>
+                            <TextBlock Text="Menu Contents" Width="65" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ReorderCatalogsButton" Background="White" Height="110" Click="ReorderCatalogsButton_Click">
+                        <StackPanel Orientation="Vertical" Width="70">
+                            <Image Width="40" Height="40" Margin="0,0,0,3" Source="/Swap.png"/>
+                            <TextBlock Text="Reorder Catalogs" Width="65" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ChangeImageButton" Background="White" Height="110" Click="ChangeImageButton_Click">
+                        <StackPanel Orientation="Vertical" Width="70">
+                            <Image Width="40" Height="40" Margin="0,4,0,6" Source="/image.png"/>
+                            <TextBlock Text="Image Assets" Width="59" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="LogoutButton" Background="White" Height="110" Click="LogoutButton_Click">
+                        <StackPanel Orientation="Vertical" Width="70">
+                            <Image Width="40" Height="40" Margin="0,4,0,6" Source="/Logout.png"/>
+                            <TextBlock Text="Log out" Width="59" TextAlignment="Center" TextWrapping="Wrap" FontSize="16" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+            <ScrollViewer x:Name="ProductPanel" Height="612" Width="1240" Visibility="Collapsed" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Canvas.Left="19" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" Canvas.Top="1">
+                <Canvas Height="1100" Width="1250">
+                    <TextBox x:Name="ProductName" Canvas.Left="173" TextWrapping="NoWrap" Canvas.Top="76" Width="465" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundTextBoxStyle}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <TextBox.ToolTip>
+                            <TextBlock>
+                                This field is used for searching, removing, and updating a product.
+                                Do not use this field when adding a new product.
+                            </TextBlock>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    <ComboBox x:Name="MaxMilk" Canvas.Left="377" Canvas.Top="266" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            This is the maximum amount of customizations allowed for the smallest size option of the product<LineBreak/>
+                            For example, if the smallest size is Small, the selected maximum amount will apply to this size option<LineBreak/>
+                            The maximum amount will grow as the product size increases based on the provided scale value<LineBreak/>                           
+                            0 means no maximum amount, -1 means that the update operation will not be performed on this property<LineBreak/>
+                            This applies to all Max dropdown choices in this panel
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="MilkScale" Canvas.Left="477" Canvas.Top="266" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            The scale value determines how much the maximum amount will grow on larger product sizes<LineBreak/>
+                            For example, with a scale value of 1, and the selected maximum size is 2<LineBreak/>
+                            Small = 2, Medium = 3 (2 + 1), Large = 4 (2 + 1 + 1)<LineBreak/>                
+                            0 means no scale amount, -1 means that the update operation will not be performed on this property<LineBreak/>
+                            This applies to all Scale dropdown choices in this panel
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="PointsValue" Canvas.Left="1040" Canvas.Top="421" Width="68" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This indicates how many points the customer will get when they purchase this product<LineBreak/>
+                                -1 means no update operation will be performed
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="StampValue" Canvas.Left="1040" Canvas.Top="462" Width="68" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This indicates how many stamps the customer will get when they purchase this product<LineBreak/>
+                                -1 means no update operation will be performed
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="MaxAddon" Canvas.Left="377" Canvas.Top="305" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27"/>
+                    <ComboBox x:Name="AddonScale" Canvas.Left="477" Canvas.Top="305" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27"/>
+                    <ComboBox x:Name="MaxSyrup" Canvas.Left="377" Canvas.Top="345" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27"/>
+                    <ComboBox x:Name="SyrupScale"  Canvas.Left="477" Canvas.Top="345" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27"/>
+                    <ComboBox x:Name="MaxSweetener" Canvas.Left="377" Canvas.Top="385" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27"/>
+                    <ComboBox x:Name="SweetenerScale" Canvas.Left="477" Canvas.Top="385" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27"/>
+                    <ComboBox x:Name="MaxBase" Canvas.Left="477" Canvas.Top="425" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTip="The maximum amount of bases that can be used on the product" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="20000"/>
+                    <ComboBox x:Name="MaxEspresso" Canvas.Left="797" Canvas.Top="74" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" Height="27" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="40000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            The maximum amount of espresso shots available for the product at the smallest size<LineBreak/>
+                            The maximum amount will grow using the scale value for each size increase<LineBreak/>
+                            For example, with a scale value of 1, and the selected maximum amount is 2<LineBreak/>
+                            Small = 2, Medium = 3 (2 + 1), Large = 4 (2 + 1 + 1)
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="DefaultEspresso" Canvas.Left="797" Canvas.Top="113" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="20000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            The default amount of espresso shots a product has
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="EspressoScale" Canvas.Left="797" Canvas.Top="152" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="40000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            The scale value determines how much the maximum amount will grow on larger product sizes<LineBreak/>
+                            For example, with a scale value of 1, and the selected maximum size is 2<LineBreak/>
+                            Small = 2, Medium = 3 (2 + 1), Large = 4 (2 + 1 + 1)<LineBreak/>                
+                            0 means no scale amount, -1 means that the update operation will not be performed on this property<LineBreak/>
+                            This applies to all Scale dropdown choices in this panel
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="HasEspShot" SelectedIndex="0" Canvas.Left="797" Canvas.Top="190" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <System:String>None</System:String>
+                        <System:Boolean>False</System:Boolean>
+                        <System:Boolean>True</System:Boolean>
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                When set to False, the system will not ask the cashier and the customer for espresso shots on this product.
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="CanServeWarm" SelectedIndex="0" Height="27" Canvas.Left="797" Canvas.Top="346" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="20000">
+                        <System:String>None</System:String>
+                        <System:Boolean>False</System:Boolean>
+                        <System:Boolean>True</System:Boolean>
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            Only applies to pastries that can be reheated<LineBreak/>
+                            When 'None' is selected, the update operation will not be performed on this property<LineBreak/>
+                            This applies to all dropdown choices that has a 'None' option
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="TempMode" SelectedIndex="0" Height="27" Canvas.Left="797" Canvas.Top="267" Width="66" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"  ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="20000">
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                        <System:Int32>4</System:Int32>
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            0 = No update operation performed<LineBreak/>
+                            1 = No temperature<LineBreak/>
+                            2 = Hot only<LineBreak/>
+                            3 = Cold only<LineBreak/>
+                            4 = Hot, Cold
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="SizeMode" Height="27" SelectedIndex="0" Canvas.Left="797" Canvas.Top="307" Width="66" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="35000" RenderTransformOrigin="0.509,0.452">
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                        <System:Int32>4</System:Int32>
+                        <System:Int32>5</System:Int32>
+                        <System:Int32>6</System:Int32>
+                        <System:Int32>7</System:Int32>
+                        <System:Int32>8</System:Int32>
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            0 = No update operation performed<LineBreak/>
+                            1 = No size<LineBreak/>
+                            2 = Small only<LineBreak/>
+                            3 = Small, Medium<LineBreak/>
+                            4 = Small, Large<LineBreak/>
+                            5 = Medium only<LineBreak/>
+                            6 = Medium, Large<LineBreak/>
+                            7 = Large only<LineBreak/>
+                            8 = Small, Medium, Large
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="MilkRequired" SelectedIndex="0" Canvas.Left="606" Canvas.Top="266" Width="36" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This determines the required amount of milk to select<LineBreak/>
+                                0 = No update operation<LineBreak/>
+                                1 = Not required<LineBreak/>
+                                2 = Required at least 1<LineBreak/>
+                                3 = Fully required
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                    </ComboBox>
+                    <ComboBox x:Name="BaseRequired" SelectedIndex="0" Canvas.Left="606" Canvas.Top="425" Width="36" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This determines the required amount of base to select<LineBreak/>
+                                0 = No update operation<LineBreak/>
+                                1 = Not required<LineBreak/>
+                                2 = Required at least 1<LineBreak/>
+                                3 = Fully required
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                    </ComboBox>
+                    <ComboBox x:Name="SweetRequired" SelectedIndex="0" Canvas.Left="606" Canvas.Top="385" Width="36" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This determines the required amount of sweetener to select<LineBreak/>
+                                0 = No update operation<LineBreak/>
+                                1 = Not required<LineBreak/>
+                                2 = Required at least 1<LineBreak/>
+                                3 = Fully required
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                    </ComboBox>
+                    <ComboBox x:Name="SyrupRequired" SelectedIndex="0" Canvas.Left="606" Canvas.Top="345" Width="36" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This determines the required amount of syrup to select<LineBreak/>
+                                0 = No update operation<LineBreak/>
+                                1 = Not required<LineBreak/>
+                                2 = Required at least 1<LineBreak/>
+                                3 = Fully required
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                    </ComboBox>
+                    <ComboBox x:Name="AddonRequired" SelectedIndex="0" Canvas.Left="606" Canvas.Top="305" Width="36" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This determines the required amount of add-ons to select<LineBreak/>
+                                0 = No update operation<LineBreak/>
+                                1 = Not required<LineBreak/>
+                                2 = Required at least 1<LineBreak/>
+                                3 = Fully required
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                    </ComboBox>
+                    <DatePicker x:Name="ProductEndDate" Canvas.Left="1068" Canvas.Top="339" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Width="124"/>
+                    <DatePicker x:Name="ProductStartDate" Canvas.Left="908" Canvas.Top="339" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Width="126"/>
+                    <ComboBox x:Name="ProductStartTime" Canvas.Left="908" Canvas.Top="299" Width="126" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTip="When 'None' is selected, no update operation is performed in this property, this also applies to the 'Available until' property." ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000"/>
+                    <ComboBox x:Name="ProductEndTime" Canvas.Left="1068" Canvas.Top="299" Width="124" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="MilkPage" Canvas.Left="173" Canvas.Top="266" Width="153" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="MilkPage_SelectionChanged" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This is the available milk options for the product.<LineBreak/>
+                                Select 'N/A' when the product has no milk options<LineBreak/>
+                                Otherwise, select the menu containing the milk options of the product
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="AddonPage" Canvas.Left="173" Canvas.Top="305" Width="153" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="AddonPage_SelectionChanged" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This is the available add-ons for the product.<LineBreak/>
+                                Select 'N/A' when the product has no add-ons<LineBreak/>
+                                Otherwise, select the menu containing the add-ons of the product
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="SyrupPage" Canvas.Left="173" Canvas.Top="345" Width="153" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="SyrupPage_SelectionChanged" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This is the available syrup options for the product.<LineBreak/>
+                                Select 'N/A' when the product has no syrup options<LineBreak/>
+                                Otherwise, select the menu containing the syrup options of the product
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="SweetenerPage" Canvas.Left="173" Canvas.Top="385" Width="153" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="SweetenerPage_SelectionChanged" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This is the available sweeteners for the product.<LineBreak/>
+                                This is also the sweetness level of the product<LineBreak/>
+                                Select 'N/A' when the product has a fixed sweetness mixture<LineBreak/>
+                                Otherwise, select the menu containing the sweeteners of the product<LineBreak/>
+                                Set the maximum sweetener options allowed to indicate the sweetness level
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="BasePage" Canvas.Left="173" Canvas.Top="425" Width="249" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="BasePage_SelectionChanged" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This is the available base options for the product<LineBreak/>
+                                Select 'N/A' when the product has a fixed base<LineBreak/>
+                                Otherwise, select the menu containing the base options of the product
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="VariantPage" Canvas.Left="173" Canvas.Top="465" Width="469" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="VariantPage_SelectionChanged" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This is the different variants of the product<LineBreak/>
+                                Select 'N/A' when the product has no other variants<LineBreak/>
+                                Otherwise, select the menu containing the other variants of the product
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <TextBlock Canvas.Left="65" TextWrapping="Wrap" Text="Product name" Canvas.Top="77" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="88" TextWrapping="Wrap" Text="Milk menu" Canvas.Top="268" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="262" TextWrapping="Wrap" Text="Product information details" Canvas.Top="41" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="191" TextWrapping="Wrap" Text="These are all the options available for a product" Canvas.Top="233" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="2.992,-1.925"/>
+                    <TextBlock Canvas.Left="57" TextWrapping="Wrap" Text="Add-ons menu" Canvas.Top="307" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="71" TextWrapping="Wrap" Text="Syrups menu" Canvas.Top="347" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="37" TextWrapping="Wrap" Text="Sweeteners menu" Canvas.Top="386" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="84" TextWrapping="Wrap" Text="Base menu" Canvas.Top="427" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="61" TextWrapping="Wrap" Text="Variants menu" Canvas.Top="467" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock TextWrapping="Wrap" Text="Scale" Canvas.Left="433" Canvas.Top="268" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Max" Canvas.Left="340" Canvas.Top="268" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="6.968,5.594"/>
+                    <TextBlock TextWrapping="Wrap" Text="Max" Canvas.Left="440" Canvas.Top="427" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Required" Canvas.Left="534" Canvas.Top="268" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Required" Canvas.Left="534" Canvas.Top="427" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Required" Canvas.Left="534" Canvas.Top="386" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Required" Canvas.Left="534" Canvas.Top="347" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Required" Canvas.Left="534" Canvas.Top="308" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.459,1.388"/>
+                    <TextBlock TextWrapping="Wrap" Text="Max" Canvas.Left="340" Canvas.Top="307" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Scale" Canvas.Left="433" Canvas.Top="307" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Max" Canvas.Left="340" Canvas.Top="347" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Scale" Canvas.Left="433" Canvas.Top="347" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Max" Canvas.Left="340" Canvas.Top="387" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock TextWrapping="Wrap" Text="Scale" Canvas.Left="433" Canvas.Top="386" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock Canvas.Left="673" TextWrapping="Wrap" Text="Espresso shot configuration" Canvas.Top="41" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Width="198"/>
+                    <TextBlock Canvas.Left="689" TextWrapping="Wrap" Text="Other product properties" Canvas.Top="234" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Width="185"/>
+                    <TextBlock Canvas.Left="961" TextWrapping="Wrap" Text="Seasonal product details" Canvas.Top="234" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Width="186"/>
+                    <TextBlock Canvas.Left="679" TextWrapping="Wrap" Text="Maximum shot" FontSize="16" Canvas.Top="77" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="682" TextWrapping="Wrap" Text="Minimum shot" FontSize="16" Canvas.Top="115" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="708" TextWrapping="Wrap" Text="Scale value" FontSize="16" Canvas.Top="154" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="723" TextWrapping="Wrap" Text="Has shot" Canvas.Top="193" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="700" TextWrapping="Wrap" Text="Serve warm" Canvas.Top="347" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="694" TextWrapping="Wrap" Text="Temperature" Canvas.Top="270" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="697" TextWrapping="Wrap" Text="Size choices" Canvas.Top="309" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="919" TextWrapping="Wrap" Text="Available from" Canvas.Top="267" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="1080" TextWrapping="Wrap" Text="Available until" Canvas.Top="267" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Border x:Name="Separator1" Height="100" Width="2" Canvas.Left="1050" Background="Black" Canvas.Top="270" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <Button x:Name="AddProduct" Background="Transparent" Content="Add product" Height="28" FontSize="16" Canvas.Left="120" Canvas.Top="515" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="123" Click="AddProduct_Click"/>
+                    <Button x:Name="RemoveProduct" Background="Transparent" Content="Remove product" Height="28" FontSize="16" Canvas.Left="795" Canvas.Top="515" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="144" Click="RemoveProduct_Click"/>
+                    <Button x:Name="UpdateProduct" Background="Transparent" Content="Update product" Height="28" FontSize="16" Canvas.Left="620" Canvas.Top="515" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="144" Click="UpdateProduct_Click"/>
+                    <Button x:Name="SearchProduct" Background="Transparent" Content="Search product" Height="28" FontSize="16" Canvas.Left="274" Canvas.Top="515" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140" Click="SearchProduct_Click"/>
+                    <Button x:Name="LoadProduct" Background="Transparent" Content="Load product" Height="28" FontSize="16" Canvas.Left="444" Canvas.Top="515" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140" Click="LoadProduct_Click"/>
+                    <Button x:Name="ClearProductInput" Background="Transparent" Content="Clear all input fields" Height="28" FontSize="16" Canvas.Left="970" Canvas.Top="515" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="165" PreviewMouseLeftButtonDown="ClearProductInput_PreviewMouseLeftButtonDown" PreviewMouseRightButtonDown="ClearProductInput_PreviewMouseRightButtonDown"/>
+                    <Button x:Name="LoadProductImage" Content="Select image" Height="28" Background="Transparent" Canvas.Left="1068" Canvas.Top="109" FontSize="16" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="126" Click="LoadProductImageButton_Click"/>
+                    <Button x:Name="RemoveProductImage" Content="Remove image" Height="28" Background="Transparent" Canvas.Left="1068" Canvas.Top="151" FontSize="16" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="126" Click="RemoveProductImage_Click"/>
+                    <DataGrid x:Name="ProductsTable" CanUserSortColumns="True" Height="500" Width="1080" Canvas.Left="88" Canvas.Top="602" HorizontalAlignment="Center" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Top" SelectionChanged="ProductsTable_SelectionChanged" FontSize="16">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding [Product Name]}" SortMemberPath="Product Name"/>
+                            <DataGridTextColumn Header="Product Price (PHP)" Binding="{Binding [Product Price]}" SortMemberPath="Product Price"/>
+                            <DataGridTextColumn Header="Order Mode" Binding="{Binding [Order Mode]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Points Value" Binding="{Binding [Points Value]}" SortMemberPath="Points Value"/>
+                            <DataGridTextColumn Header="Stamps Value" Binding="{Binding [Stamps Value]}" SortMemberPath="Stamps Value"/>
+                            <DataGridTextColumn Header="Price Scale (PHP)" Binding="{Binding [Price Scale]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Product Quantity" Binding="{Binding [Product Quantity]}" SortMemberPath="Product Quantity"/>
+                            <DataGridTextColumn Header="Has Quantity" Binding="{Binding [Has Quantity]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Has Discount" Binding="{Binding [Has Discount]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Variants Page" Binding="{Binding [Variants Page]}" SortMemberPath="Variants Page"/>
+                            <DataGridTextColumn Header="Product Milk Page" Binding="{Binding [Product Milk Page]}" SortMemberPath="Product Milk Page"/>
+                            <DataGridTextColumn Header="Max Milk Amount" Binding="{Binding [Max Milk Amount]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Milk Scale Value" Binding="{Binding [Milk Scale Value]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Milk Required" Binding="{Binding [Milk Required]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Product Add-ons Page" Binding="{Binding [Product Add-ons Page]}" SortMemberPath="Product Add-ons Page"/>
+                            <DataGridTextColumn Header="Max Add-ons Amount" Binding="{Binding [Max Add-ons Amount]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Add-ons Scale Value" Binding="{Binding [Add-ons Scale Value]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Add-on Required" Binding="{Binding [Add-on Required]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Product Syrup Page" Binding="{Binding [Product Syrup Page]}" SortMemberPath="Product Syrup Page"/>
+                            <DataGridTextColumn Header="Max Syrup Amount" Binding="{Binding [Max Syrup Amount]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Syrup Scale Value" Binding="{Binding [Syrup Scale Value]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Syrup Required" Binding="{Binding [Syrup Required]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Product Sweetener Page" Binding="{Binding [Product Sweetener Page]}" SortMemberPath="Product Sweetener Page"/>
+                            <DataGridTextColumn Header="Max Sweetener Amount" Binding="{Binding [Max Sweetener Amount]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Sweetener Scale Value" Binding="{Binding [Syrup Scale Value]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Sweetener Required" Binding="{Binding [Sweetener Required]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Product Base Page" Binding="{Binding [Product Base Page]}" SortMemberPath="Product Base Page"/>
+                            <DataGridTextColumn Header="Max Base Amount" Binding="{Binding [Max Base Amount]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Base Required" Binding="{Binding [Base Required]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Default Espresso Shot" Binding="{Binding [Default Espresso Shot]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Espresso Shot Scale Value" Binding="{Binding [Espresso Shot Scale Value]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Max Espresso Shot" Binding="{Binding [Max Espresso Shot]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Has Espresso Shot" Binding="{Binding [Has Espresso Shot]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Can Serve Warm" Binding="{Binding [Can Serve Warm]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Temperature Mode" Binding="{Binding [Temperature Mode]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Size Mode" Binding="{Binding [Size Mode]}" CanUserSort="False"/>
+                            <DataGridTextColumn Header="Product Start Date" Binding="{Binding [Product Start Date], StringFormat={}{0:M-dd-yyyy}}" SortMemberPath="Product Start Date"/>
+                            <DataGridTextColumn Header="Product End Date" Binding="{Binding [Product End Date], StringFormat={}{0:M-dd-yyyy}}" SortMemberPath="Product End Date"/>
+                            <DataGridTextColumn Header="Product Start Time" Binding="{Binding [Product Start Time]}" SortMemberPath="Product Start Time"/>
+                            <DataGridTextColumn Header="Product End Time" Binding="{Binding [Product End Time]}" SortMemberPath="Product End Time"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Canvas.Left="419" TextWrapping="Wrap" Text="All the existing products in the system are inside this table" FontSize="16" Canvas.Top="572" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="447" TextWrapping="Wrap" Text="Manage all products added in the database here" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Border BorderBrush="Black" BorderThickness="1" Height="140" Width="140" Canvas.Left="905" Canvas.Top="74" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Image x:Name="ProductImage" />
+                    </Border>
+                    <TextBlock Canvas.Left="924" TextWrapping="Wrap" Text="Product image" Canvas.Top="41" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110"/>
+                    <TextBox x:Name="NewProductName" Canvas.Left="173" TextWrapping="NoWrap" Canvas.Top="114" Width="465" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="28" TextWrapping="Wrap" Text="New product name" Canvas.Top="114" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="UpdateProductImage" Content="Product image" Canvas.Left="490" Canvas.Top="196" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="When checked, the product image will be altered during update operation" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <ComboBox x:Name="HasQuantity" SelectedIndex="0" Height="27" Canvas.Left="797" Canvas.Top="386" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <System:String>None</System:String>
+                        <System:Boolean>False</System:Boolean>
+                        <System:Boolean>True</System:Boolean>
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                When set to False, the quantity of this product is considered infinite, it will still be available for ordering even when quantity is 0.<LineBreak/>
+                                When set to True, this product will not be visible to customers and cashiers when quantity is 0.
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <ComboBox x:Name="HasDiscount" SelectedIndex="0" Height="27" Canvas.Left="797" Canvas.Top="426" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTip="This property indicates if the product is eligible for PWD/Senior discount or not" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <System:String>None</System:String>
+                        <System:Boolean>False</System:Boolean>
+                        <System:Boolean>True</System:Boolean>
+                    </ComboBox>
+
+                    <ComboBox x:Name="ProductOrderMode" SelectedIndex="0" Height="27" Canvas.Left="797" Canvas.Top="465" Width="67" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <System:Int32>0</System:Int32>
+                        <System:Int32>1</System:Int32>
+                        <System:Int32>2</System:Int32>
+                        <System:Int32>3</System:Int32>
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                                This fields indicates what order mode should the product be available in<LineBreak/>
+                                0 = No update operation performed<LineBreak/>
+                                1 = Dine-in only<LineBreak/>
+                                2 = Take-out only<LineBreak/>
+                                3 = Any order mode
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <TextBlock Canvas.Left="693" TextWrapping="Wrap" Text="Has quantity" FontSize="16" Canvas.Top="387" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="694" TextWrapping="Wrap" Text="PWD/Senior" FontSize="16" Canvas.Top="429" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="694" TextWrapping="Wrap" Text="Order mode" FontSize="16" Canvas.Top="468" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBox x:Name="ProductQuantity" Canvas.Left="528" TextWrapping="NoWrap" Canvas.Top="152" Width="110" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="400" TextWrapping="Wrap" Text="Product quantity" FontSize="16" Canvas.Top="152" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="UpdateProductStartDate" Content="Start date" FontSize="13" Canvas.Left="258" Canvas.Top="196" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="When checked, the product start date will be altered during update operation" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <CheckBox x:Name="UpdateProductEndDate" Content="End date" FontSize="13" Canvas.Left="377" Canvas.Top="196" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="When checked, the product end date will be altered during update operation" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="1.25" ScaleY="1.25"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <TextBlock Canvas.Left="186" TextWrapping="Wrap" Text="Update" FontSize="16" Canvas.Top="195" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox x:Name="ProductPrice" Canvas.Left="173" TextWrapping="NoWrap" Canvas.Top="152" Width="110" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="PriceScale" Canvas.Left="340" Canvas.Top="150" Width="45" IsEditable="False" IsReadOnly="True" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Height="27" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                        <ComboBox.ToolTip>
+                            <TextBlock>
+                            The scale value determines how much the product price will grow on larger product sizes<LineBreak/>
+                            For example, with a scale value of 10, and the price is 150<LineBreak/>
+                            Small = 150, Medium = 160 (150 + 10), Large = 170 (150 + 10 + 10)<LineBreak/>                
+                            0 means no scale amount, -1 means that the update operation will not be performed on this property<LineBreak/>
+                            This applies to all Scale dropdown choices in this panel
+                            </TextBlock>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <TextBlock Canvas.Left="69" TextWrapping="Wrap" Text="Product price" FontSize="16" Canvas.Top="152" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock TextWrapping="Wrap" Text="Scale" Canvas.Left="297" Canvas.Top="152" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="988" TextWrapping="Wrap" Text="Points" Canvas.Top="423" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="979" TextWrapping="Wrap" Text="Stamps" Canvas.Top="465" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Canvas.Left="974" TextWrapping="Wrap" Text="Membership reward" Canvas.Top="387" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Canvas>
+            </ScrollViewer>
+            <Canvas x:Name="MenuPanel" Height="649" Width="1004" Canvas.Left="166" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="2">
+                <TextBlock Canvas.Left="69" TextWrapping="Wrap" Text="Menu name" Canvas.Top="39" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="MenuStartTime" Canvas.Left="25" Canvas.Top="398" Width="125" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="MenuEndTime" Canvas.Left="177" Canvas.Top="398" Width="125" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <DatePicker x:Name="MenuStartDate" Canvas.Left="25" Canvas.Top="435" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Width="125"/>
+                <DatePicker x:Name="MenuEndDate" Canvas.Left="177" Canvas.Top="435" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Width="125"/>
+                <TextBox x:Name="MenuName" Canvas.Left="166" TextWrapping="NoWrap" Canvas.Top="39" Width="140" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                    <TextBox.ToolTip>
+                        <TextBlock>
+                            This field is used for searching, removing, and updating a menu. Do not use this field when adding a new menu.
+                        </TextBlock>
+                    </TextBox.ToolTip>
+                </TextBox>
+                <Border BorderBrush="Black" BorderThickness="0.5" Height="140" Width="140" Canvas.Left="166" Canvas.Top="188" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image x:Name="MenuImage" />
+                </Border>
+                <Button x:Name="SelectMenuImage" Content="Select image" Height="28" Background="White" Canvas.Left="27" Canvas.Top="220" FontSize="16" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="122" Click="SelectMenuImage_Click"/>
+                <Button x:Name="RemoveMenuImage" Content="Remove image" Height="28" Background="White" Canvas.Left="27" Canvas.Top="260" FontSize="16" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="122" Click="RemoveMenuImage_Click"/>
+                <CheckBox x:Name="UpdateMenuImage" Content="Update image" Canvas.Top="302" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="36" ToolTip="When checked, the menu image will be altered during update operation" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000"/>
+                <TextBlock Canvas.Left="45" TextWrapping="Wrap" Text="Menu image" Canvas.Top="189" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="38" TextWrapping="Wrap" Text="Available from" Canvas.Top="371" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="190" TextWrapping="Wrap" Text="Available until" Canvas.Top="371" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <DataGrid x:Name="MenuGrid" Height="576" Width="638" Canvas.Left="338" FontSize="16" Canvas.Top="37" AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="MenuGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Menu Name" Binding="{Binding [Menu Name]}" SortMemberPath="Menu Name"/>
+                        <DataGridTextColumn Header="Order Mode" Binding="{Binding [Order Mode]}" CanUserSort="False"/>
+                        <DataGridTextColumn Header="Is Menu Hidden" Binding="{Binding [Is Menu Hidden]}" CanUserSort="False"/>
+                        <DataGridTextColumn Header="Menu Start Date" Binding="{Binding [Menu Start Date], StringFormat={}{0:M-dd-yyyy}}" SortMemberPath="Menu Start Date"/>
+                        <DataGridTextColumn Header="Menu End Date" Binding="{Binding [Menu End Date], StringFormat={}{0:M-dd-yyyy}}" SortMemberPath="Menu End Date"/>
+                        <DataGridTextColumn Header="Menu Start Time" Binding="{Binding [Menu Start Time]}" SortMemberPath="Menu Start Time"/>
+                        <DataGridTextColumn Header="Menu End Time" Binding="{Binding [Menu End Time]}" SortMemberPath="Menu End Time"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="AddMenu" Content="Add menu" FontSize="16" Height="28" Canvas.Top="511" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="119" Canvas.Left="34" Click="AddMenu_Click"/>
+                <Button x:Name="RemoveMenu" Content="Remove menu" FontSize="16" Height="28" Canvas.Left="34" Canvas.Top="549" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="119" Click="RemoveMenu_Click"/>
+                <Button x:Name="SearchMenu" Content="Search menu" FontSize="16" Height="28" Canvas.Left="175" Canvas.Top="549" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="117" Click="SearchMenu_Click"/>
+                <Button x:Name="UpdateMenu" Content="Update menu" FontSize="16" Height="28" Canvas.Left="175" Canvas.Top="511" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="117" Click="UpdateMenu_Click"/>
+                <Button x:Name="ClearMenuInputs" Content="Clear inputs" FontSize="16" Height="28" Canvas.Left="177" Canvas.Top="585" Background="White" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="115" PreviewMouseLeftButtonDown="ClearMenuInputs_PreviewMouseLeftButtonDown" PreviewMouseRightButtonDown="ClearMenuInputs_PreviewMouseRightButtonDown"/>
+                <TextBlock Canvas.Left="62" TextWrapping="Wrap" Text="Update" FontSize="13" Canvas.Top="476" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UpdateMenuStartDate" Content="Start date" Canvas.Left="115" Canvas.Top="477" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTip="When checked, the menu start date will be altered during update operation" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000"/>
+                <CheckBox x:Name="UpdateMenuEndDate" Content="End date" Canvas.Left="202" Canvas.Top="477" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTip="When checked, the menu end date will be altered during update operation" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000"/>
+                <TextBlock Canvas.Left="33" TextWrapping="NoWrap" Text="New menu name" Canvas.Top="73" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBox x:Name="NewMenuName" Canvas.Left="166" TextWrapping="NoWrap" Canvas.Top="73" Width="140" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="MenuHidden" SelectedIndex="0" IsEditable="False" IsReadOnly="True" FontSize="16" Canvas.Left="166" Canvas.Top="108" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                    <System:String>None</System:String>
+                    <System:Boolean>False</System:Boolean>
+                    <System:Boolean>True</System:Boolean>
+                    <ComboBox.ToolTip>
+                        <TextBlock>
+                            When set to True, the product will not be visible on the ordering section for cashiers and customers.
+                        </TextBlock>
+                    </ComboBox.ToolTip>
+                </ComboBox>
+                <TextBlock Canvas.Left="59" TextWrapping="Wrap" Text="Menu hidden" FontSize="16" Canvas.Top="111" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Border BorderBrush="Black" BorderThickness="1" Height="90" Width="1" Canvas.Left="163" Canvas.Top="375" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="83" TextWrapping="Wrap" Text="Seasonal menu details" FontSize="16" Canvas.Top="341" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="462" TextWrapping="Wrap" Text="All the existing menus in the system are displayed here" FontSize="16" Canvas.Top="3" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="98" TextWrapping="Wrap" Text="Menu information details" FontSize="16" Canvas.Top="3" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="LoadMenu" Content="Load menu" FontSize="16" Height="28" Canvas.Left="34" Canvas.Top="585" Background="White" Style="{StaticResource RoundButtonStyle}" Width="119" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LoadMenu_Click"/>
+                <ComboBox x:Name="MenuOrderMode" SelectedIndex="0" IsEditable="False" IsReadOnly="True" FontSize="16" Canvas.Left="166" Canvas.Top="147" Width="140" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <ComboBox.ToolTip>
+                        <TextBlock>
+                            This fields indicates what order mode should the menu be available in<LineBreak/>
+                            0 = No update operation performed<LineBreak/>
+                            1 = Dine-in only<LineBreak/>
+                            2 = Take-out only<LineBreak/>
+                            3 = Any order mode
+                        </TextBlock>
+                    </ComboBox.ToolTip>
+                    <System:Int32>0</System:Int32>
+                    <System:Int32>1</System:Int32>
+                    <System:Int32>2</System:Int32>
+                    <System:Int32>3</System:Int32>
+                </ComboBox>
+                <TextBlock Canvas.Left="66" TextWrapping="Wrap" Text="Order mode" FontSize="16" Canvas.Top="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Canvas>
+            <Canvas x:Name="MenuContentsPanel" Height="644" Width="960" Canvas.Left="192" Canvas.Top="14" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed">
+                <ComboBox x:Name="TargetMenu" Canvas.Left="34" Canvas.Top="59" Width="240" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" IsEditable="True"/>
+                <ComboBox x:Name="TargetProduct" Canvas.Left="34" Canvas.Top="130" Width="240" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" IsEditable="True"/>
+                <Button x:Name="AddProductToMenu" Content="Add product on menu" Canvas.Left="34" Canvas.Top="178" Height="28" FontSize="16" Background="Transparent" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="240" Click="AddProductToMenu_Click"/>
+                <Button x:Name="RemoveProductOnMenu" Content="Remove product on menu" Canvas.Left="34" Canvas.Top="217" Height="28" FontSize="16" Background="Transparent" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="240" Click="RemoveProductOnMenu_Click" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                    <Button.ToolTip>
+                        <TextBlock>
+                            This button removes the selected product in the ComboBox dropdown menu<LineBreak/>
+                            This function can only remove 1 product from the menu at a time
+                        </TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="RemoveProductAllMenus" Content="Remove product on all menus" Canvas.Left="34" Canvas.Top="257" Height="28" FontSize="16" Background="Transparent" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="240" Click="RemoveProductAllMenus_Click"/>
+                <Button x:Name="ViewMenuContents" Content="View selected menu contents" Canvas.Left="34" Canvas.Top="336" Height="28" FontSize="16" Background="Transparent" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="240" Click="ViewMenuContents_Click"/>
+                <TextBlock Canvas.Left="34" TextWrapping="Wrap" Text="Select menu" Canvas.Top="29" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="34" TextWrapping="Wrap" Text="Select product" Canvas.Top="101" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <DataGrid x:Name="SimpleMenuGrid" FontSize="16" Height="493" Width="614" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Canvas.Left="299" Canvas.Top="58" SelectionChanged="SimpleMenuGrid_SelectionChanged" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding [Product Name]}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock x:Name="SelectedMenu" Canvas.Left="300" TextWrapping="NoWrap" Text="Selected menu: " Canvas.Top="28" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Width="600"/>
+                <TextBlock Canvas.Left="48" TextWrapping="Wrap" Text="Espresso shot price (per shot)" FontSize="16" Canvas.Top="426" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBox x:Name="NewShotPrice" Canvas.Left="42" TextWrapping="NoWrap" Text="" Canvas.Top="488" Width="220" FontSize="16" Style="{StaticResource RoundTextBoxStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="UpdateShotPrice"  Content="Update espresso shot price" Canvas.Left="42" Width="220" Height="28" Canvas.Top="523" FontSize="16" Style="{StaticResource RoundButtonStyle}" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Top" Click="UpdateShotPrice_Click"/>
+                <TextBlock Canvas.Left="50" TextWrapping="Wrap" Text="Current price: " FontSize="16" Canvas.Top="454" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="150" TextWrapping="Wrap" Text="PHP" FontSize="16" Canvas.Top="454" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock x:Name="CurrentShotPrice" Canvas.Left="182" TextWrapping="Wrap" Text="0.0" FontSize="16" Canvas.Top="454" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="ClearMenuContentsButton" Content="Remove menu contents " Canvas.Left="34" Canvas.Top="296" Height="28" FontSize="16" Background="Transparent" Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="240" PreviewMouseLeftButtonDown="ClearMenuContentsButton_PreviewMouseLeftButtonDown" PreviewMouseRightButtonDown="ClearMenuContentsButton_PreviewMouseRightButtonDown" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="45000">
+                    <Button.ToolTip>
+                        <TextBlock>
+                            This button removes the selected product in the table section at the right side<LineBreak/>
+                            This function supports removing multiple selected products in the table
+                        </TextBlock>
+                    </Button.ToolTip>
+                </Button>
+            </Canvas>
+            <Canvas x:Name="ReorderCatalogsPanel" Height="515" Width="917" Canvas.Left="184" Canvas.Top="53" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <ComboBox x:Name="SelectedMenuSwap" FontSize="16" Canvas.Left="168" Canvas.Top="66" Width="229" SelectionChanged="SelectedMenuSwap_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox x:Name="SelectedProductA" FontSize="16" Canvas.Left="168" Canvas.Top="103" Width="229" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="SelectedProductB" FontSize="16" Canvas.Left="168" Canvas.Top="139" Width="229" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="SelectedMenuA" FontSize="16" Canvas.Left="170" Canvas.Top="292" Width="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="SelectedMenuB" FontSize="16" Canvas.Left="170" Canvas.Top="329" Width="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="SwapProductsButton" FontSize="16" Height="28" Content="Swap product A and B" Canvas.Left="168" Canvas.Top="178" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Width="229" Click="SwapProductsButton_Click"/>
+                <Button x:Name="ViewMenuContentsSwap" FontSize="16" Height="28" Content="View menu contents" Canvas.Left="169" Canvas.Top="217" Click="ViewMenuContentsSwap_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Width="229"/>
+                <Button x:Name="SwapMenusButton" FontSize="16" Height="28" Content="Swap menu A and B" Canvas.Left="169" Canvas.Top="369" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Width="229" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SwapMenusButton_Click"/>
+                <Button x:Name="ViewMenuArrangement" FontSize="16" Height="28" Content="View menu arrangement" Canvas.Left="169" Canvas.Top="408" Click="ViewMenuArrangement_Click" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Width="229" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Canvas.Left="21" FontSize="16" TextWrapping="Wrap" Text="Select target menu" Canvas.Top="68" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Canvas.Left="38" FontSize="16" TextWrapping="Wrap" Text="Select product A" Canvas.Top="106" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Canvas.Left="54" FontSize="16" TextWrapping="Wrap" Text="Select menu B" Canvas.Top="332" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Canvas.Left="53" FontSize="16" TextWrapping="Wrap" Text="Select menu A" Canvas.Top="295" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock FontSize="16" TextWrapping="Wrap" Text="Select product B" Canvas.Top="142" Canvas.Left="39" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <DataGrid x:Name="MenuContentsTable" FontSize="16" Height="370" Width="488" CanUserSortColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Canvas.Left="418" Canvas.Top="66" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding [Product Name]}" Width="*" Visibility="Collapsed"/>
+                        <DataGridTextColumn Header="Menu Name" Binding="{Binding [Menu Name]}" Width="*" Visibility="Collapsed"/>
+                        <DataGridTextColumn Header="Appearance Arrangement" Binding="{Binding [Appearance Arrangement]}" Width="*" Visibility="Visible"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Canvas.Left="309" TextWrapping="Wrap" Text="Menus and menu contents can be reordered here" FontSize="16" Canvas.Top="25" RenderTransformOrigin="0.431,0.61" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+            <Canvas x:Name="ChangeImagePanel" Visibility="Collapsed" Width="812" Height="609" Canvas.Left="244" Canvas.Top="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Canvas.Left="241" TextWrapping="Wrap" Text="Some of the images used by the system can be altered here" Canvas.Top="17" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Top" Width="455"/>
+                <Label Content="Company logo image" Canvas.Left="378" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="315"/>
+                <Border BorderBrush="Black" BorderThickness="1" Height="185" Width="185" Canvas.Left="366" Canvas.Top="351" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image x:Name="OrderMenuImage"/>
+                </Border>
+                <Label Content="Menu placeholder image" Canvas.Left="582" Canvas.Top="59" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Border BorderBrush="Black" BorderThickness="1" Height="185" Width="185" Canvas.Left="582" Canvas.Top="95" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image x:Name="MenuPlaceholderImage"/>
+                </Border>
+
+                <Label Content="Food placeholder image" Canvas.Left="159" Canvas.Top="59" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Height="31" Width="187"/>
+                <Border BorderBrush="Black" BorderThickness="1" Height="185" Width="185" Canvas.Left="158" Canvas.Top="95" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image x:Name="FoodPlaceholderImage"/>
+                </Border>
+                <Button x:Name="LoadFoodPlaceholder" Content="Load image" Canvas.Left="25" Canvas.Top="120" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" Click="LoadFoodPlaceholder_Click" ToolTip="Crop the product image to a square and use at least 64×64 resolution for best results" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="RemoveFoodPlaceholder" Content="Remove image" Canvas.Left="25" Canvas.Top="173" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" Click="RemoveFoodPlaceholder_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="ApplyInterfaceImage" Content="Apply image" Canvas.Left="230" FontSize="16" Canvas.Top="478" Background="White" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ApplyInterfaceImage_Click"/>
+                <Button x:Name="ApplyFoodPlaceholder" Content="Apply image" Canvas.Left="25" FontSize="16" Canvas.Top="225" Background="White" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ApplyFoodPlaceholder_Click"/>
+                <Button x:Name="ApplyMenuPlaceholder" Content="Apply image" Canvas.Left="444" FontSize="16" Canvas.Top="225" Background="White" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ApplyMenuPlaceholder_Click"/>
+                <Button x:Name="LoadMenuPlaceholder" Content="Load image" Canvas.Left="444" Canvas.Top="120" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" Click="LoadMenuPlaceholder_Click" ToolTip="Crop the product image to a square and use at least 64×64 resolution for best results" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="RemoveMenuPlaceholder" Content="Remove image" Canvas.Left="444" Canvas.Top="173" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" Click="RemoveMenuPlaceholder_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="PreviewImagesButton" Content="View uploaded images" Canvas.Left="368" Canvas.Top="557" FontSize="16" Background="White" Style="{StaticResource RoundButtonStyle}" Height="35" Width="180" Click="PreviewImagesButton_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="LoadOrderImage" Content="Load image" Canvas.Left="230" Canvas.Top="374" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" ToolTip="Crop the product image to a square and use at least 64×64 resolution for best results" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LoadOrderImage_Click"/>
+                <Button x:Name="RemoveOrderImage" Content="Remove image" Canvas.Left="230" Canvas.Top="427" Background="White" FontSize="16" Style="{StaticResource RoundButtonStyle}" Height="35" Width="120" Click="RemoveOrderImage_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+        </Canvas>
+    </Grid>
+</Window>
